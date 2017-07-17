@@ -1,0 +1,112 @@
+{% extends "mainpage/base.html" %}
+
+{% block content %}
+	
+	<div class="jumbotron text-center">
+			<h3>
+				Departments
+			</h3>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+	
+		{% for x in departments %}
+		<div class="row">
+			<div class="col-md-4">
+			<h3>
+				{{ x.name }}
+			</h3>
+			
+			<p>	
+				Phone: {{ x.phone }}
+			</p>
+			
+			{% if x.fax %}
+				<p>
+					Fax: {{ x.fax }}
+				</p>			
+			{% endif %}	
+			
+			{% if x.hours %}
+				<p>
+					Hours: {{ x.hours }}
+				</p>
+			{% endif %}
+				
+			</div>
+			<div class="col-md-4">
+				{% if x.description %}
+					<h3>Description</h3>
+					<p>
+						{{ x.description }}
+					</p>
+				{% endif %}
+				
+				{% if x.streetName%}
+					<p>
+						{{ x.streetName}}
+					</p>
+				{% endif %}
+				
+				{% if x.stateInfo %}
+					<p>
+						{{ x.stateInfo}}
+					</p>
+				{% endif %}
+			</div>
+			
+			<div class="col-md-4">
+				
+				{% if x.link %}
+					<a href="{{x.link}}" class="btn btn-primary">Website Link</a>
+				{% endif %}
+				
+				{% if x.googleMaps %}
+					<a href="{{x.googleMaps}}" class="btn btn-sucesss">Google Maps</a>
+				{% endif %}
+			</div>	
+		</div>
+		{% endfor %}
+	</div>
+	
+	<div class="container-fluid center-block">
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="pagination pagination-lg">
+				{% if departments.has_previous %}
+					<li>
+						<a href="/departments/{{ departments.previous_page_number }}">Prev</a>
+					</li>
+				{% else %}
+					<li class='disabled'>
+						<a href="#">Prev</a>
+					</li>
+				{% endif %}
+				
+				{% for i in departments.paginator.page_range %}
+					{% if departments.number == i %}
+						<li class='active'>
+							<a href='#'>{{ i }}</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="/departments/{{ i }}">{{ i }}</a>
+						</li>
+					{% endif %}
+				{% endfor %}
+				{% if departments.has_next %}
+				<li>
+					<a href="/departments/{{ departments.next_page_number }}">Next</a>
+				</li>
+				{% else %}
+					<li class='disabled'>
+						<a href='#'>Next</a>
+					</li>
+				{% endif %}
+				
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
